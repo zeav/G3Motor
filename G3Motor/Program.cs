@@ -10,6 +10,7 @@ namespace G3Motor
         static void Main(string[] args)
         {
             Console.WriteLine("Banana");
+            Console.ReadKey();
         }
     }
 }
