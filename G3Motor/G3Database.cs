@@ -96,9 +96,9 @@ namespace G3Motor
             return true;
         }
 
-        public List< string[] > Read(string query)
+        public object[][] Read(string query)
         {
-            List<string[]> rows = new List<string[]>();
+            List<object[]> rows = new List<object[]>();
 
             if (this.Connect())
             {
@@ -110,7 +110,7 @@ namespace G3Motor
                     /* save each row in a string array, add the array to the list */
                     while (data.Read())
                     {
-                        string[] row = new string[data.FieldCount];
+                        object[] row = new object[data.FieldCount];
                         data.GetValues(row); // Populates an array of objects with the column values of the current row.
                         rows.Add(row);
                     }
@@ -118,7 +118,7 @@ namespace G3Motor
                 catch (Exception e)
                 {
                     errMsg = e.Message;
-                    return rows; 
+                    return rows.ToArray(); 
                 }
                 finally
                 {
@@ -126,7 +126,7 @@ namespace G3Motor
                 }
             }
 
-            return rows;
+            return rows.ToArray();
         }
 
     }

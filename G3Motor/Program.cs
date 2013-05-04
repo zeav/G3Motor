@@ -8,16 +8,13 @@ namespace G3Motor
     class Program
     {
         static void Main(string[] args)
-        { 
-            List<string[]> result = new List<string[]>();
-            result = G3Database.Instance.Read("select * from isolasjon");
+        {
+            object[][] result = G3Database.Instance.Read("select * from isolasjon");
 
-            foreach (string[] s in result)
+            foreach (object[] row in result)
             {
-                foreach (string st in s)
-                {
-                    Console.Write(s + " ");
-                }
+                foreach (object column in row)
+                    Console.Write(column + " ");
 
                 Console.WriteLine();
             }
