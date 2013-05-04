@@ -8,11 +8,21 @@ namespace G3Motor
     class Program
     {
         static void Main(string[] args)
-        {
-            Console.WriteLine("Banana");
-            Console.WriteLine("Split");
+        { 
+            List<string[]> result = new List<string[]>();
+            result = G3Database.Instance.Read("select * from isolasjon");
 
-            G3Database.Instance.Query("INSERT INTO isolasjon (tykkelse) values('40');");
+            foreach (string[] s in result)
+            {
+                foreach (string st in s)
+                {
+                    Console.Write(s + " ");
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine(G3Database.Instance.errMsg);
 
             Console.ReadKey();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using MySql.Data.MySqlClient; // http://cdn.mysql.com/Downloads/Connector-Net/mysql-connector-net-6.6.5.msi // SQL Library is in folder.
+using System.Collections.Generic;
 
 namespace G3Motor
 {   
@@ -13,7 +14,7 @@ namespace G3Motor
         **/
         private static readonly G3Database instance = new G3Database();
         private MySqlConnection connection;
-        private string errMsg;
+        public string errMsg = "No errors encountered.";
 
         /* Static init. Singleton pattern instantiation. */
         public static G3Database Instance
@@ -32,7 +33,7 @@ namespace G3Motor
             string server = "int.zeav.no";
             string port = "3306";
             string database = "g3";
-            string uid = "g3"; // should the user have limited rights?
+            string uid = "g3";
             string password = "g3";
             string connectionString = String.Format("SERVER={0}; PORT={1}; DATABASE={2}; UID={3}; PASSWORD={4};", server, port, database, uid, password);
 
@@ -51,15 +52,7 @@ namespace G3Motor
             }
             catch (MySqlException e)
             {
-                switch (e.Number)
-                {
-                    case 0: errMsg = "Server unavailable.\n" + e.StackTrace;
-                        break;
-
-                    case 1045: errMsg = "Invalid credentials\n" + e.StackTrace;
-                        break;
-                }
-
+                errMsg = e.Message;
                 return false;
             }
         }
@@ -101,6 +94,39 @@ namespace G3Motor
             }
 
             return true;
+        }
+
+        public List< string[] > Read(string query)
+        {
+            List<string[]> rows = new List<string[]>();
+
+            if (this.Connect())
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader data = cmd.ExecuteReader();
+
+                    /* save each row in a string array, add the array to the list */
+                    while (data.Read())
+                    {
+                        string[] row = new string[data.FieldCount];
+                        data.GetValues(row); // Populates an array of objects with the column values of the current row.
+                        rows.Add(row);
+                    }
+                }
+                catch (Exception e)
+                {
+                    errMsg = "Error while executing the query.\n" + e.StackTrace;
+                    return rows; 
+                }
+                finally
+                {
+                    this.Disconnect();
+                }
+            }
+
+            return rows;
         }
 
     }
