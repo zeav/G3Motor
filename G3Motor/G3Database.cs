@@ -1,5 +1,5 @@
 ﻿using System;
-using MySql.Data.MySqlClient; // http://cdn.mysql.com/Downloads/Connector-Net/mysql-connector-net-6.6.5.msi
+using MySql.Data.MySqlClient; // http://cdn.mysql.com/Downloads/Connector-Net/mysql-connector-net-6.6.5.msi // SQL Library is in folder.
 
 namespace G3Motor
 {   
@@ -11,7 +11,7 @@ namespace G3Motor
         /**
          * Member variables.
         **/
-        private static readonly G3Database instance;
+        private static readonly G3Database instance = new G3Database();
         private MySqlConnection connection;
         private string errMsg;
 

@@ -11,6 +11,9 @@ namespace G3Motor
         {
             Console.WriteLine("Banana");
             Console.WriteLine("Split");
+
+            G3Database.Instance.Query("INSERT INTO isolasjon (tykkelse) values('40');");
+
             Console.ReadKey();
         }
     }
