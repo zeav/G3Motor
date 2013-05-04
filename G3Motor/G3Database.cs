@@ -29,15 +29,13 @@ namespace G3Motor
         **/
         private G3Database()
         {
-            string server = "ip";
-            string database = "G3Database";
-            string uid = "user"; // should the user have limited rights?
-            string password = "password";
+            string server = "int.zeav.no:3306";
+            string database = "g3";
+            string uid = "g3"; // should the user have limited rights?
+            string password = "g3";
+            string connectionString = String.Format("SERVER={0}; DATABASE={1}; UID={2}; PASSWORD={3};", server, database, uid, password);
 
-            connection = new MySqlConnection("SERVER=" + server + ";" +
-                                             "DATABASE=" + database + ";" +
-                                             "UID=" + uid + ";" +
-                                             "PASSWORD=" + password + ";");
+            connection = new MySqlConnection(connectionString);
         }
 
         /**
