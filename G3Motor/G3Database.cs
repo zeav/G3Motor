@@ -66,7 +66,7 @@ namespace G3Motor
             }
             catch (Exception e)
             {
-                errMsg = "Unable to disconnect.\n" + e.Message;
+                errMsg = e.Message;
                 return false;
             }
         }
@@ -117,7 +117,7 @@ namespace G3Motor
                 }
                 catch (Exception e)
                 {
-                    errMsg = "Error while executing the query.\n" + e.StackTrace;
+                    errMsg = e.Message;
                     return rows; 
                 }
                 finally
